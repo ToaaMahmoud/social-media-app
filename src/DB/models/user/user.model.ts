@@ -2,7 +2,8 @@ import { model, Schema } from "mongoose";
 import {
   IUserDocument,
   UserRoles,
-} from "../../interfaces/db-interfaces/user.db.interface";
+} from "../../../interfaces/db-interfaces/user.db.interface";
+import { hashPassword } from "../../../utils/hashing/hashing";
 
 const userSchema = new Schema<IUserDocument>(
   {
@@ -28,6 +29,9 @@ const userSchema = new Schema<IUserDocument>(
   },
   { timestamps: true },
 );
-
+userSchema.pre<IUserDocument>("save", async function () {
+  if (!this.isModified("password")) return;
+  this.password = await hashPassword({password: this.password});
+});
 const User = model<IUserDocument>("User", userSchema);
 export default User;

@@ -1,6 +1,7 @@
 import { Application } from "express";
 import routers from "./routes/routes";
 import { globalError } from "./utils/error-handling/global-error";
+import { AppError } from "./utils/error-handling/app-error";
 
 const entryPoint = (app: Application, express: any) => {
 
@@ -20,13 +21,13 @@ const entryPoint = (app: Application, express: any) => {
   app.use(`${baseUrl}/posts`, routers.postRouter);
 
   //not found handler
-  app.use((req, res) => {
-    res.status(404).json({ message: "Not Found" });
+  app.use((req, res, next) => {
+    next(new AppError("Not Found", 404))
+  });
 
   //global error handling
     app.use(globalError);
-  });
-  
+    
   // Unhandled errors of the app
   process.on("unhandledRejection", (err) => {
     console.error(err);

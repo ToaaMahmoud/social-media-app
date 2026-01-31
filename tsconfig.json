@@ -15,7 +15,7 @@
   },
   "include": [
     "**/*.ts"
-  ],
+, "src/DB/models/user/user.hoos"  ],
   "exclude": [
     "node_modules",
     "dist"
