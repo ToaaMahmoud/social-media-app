@@ -9,7 +9,7 @@ export interface IUser {
     email: string;
     password: string
     age: number
-    role: UserRoles
+    role: UserRoles;
 }
 
 export interface IUserDocument extends IUser, Document {}

@@ -16,7 +16,7 @@ export class UserService {
 
     const user = await User.create(userData);
     return user.toObject();
-  }
+  } 
 
   static async findAll(): Promise<IUser[]> {
     return await User.find().lean();

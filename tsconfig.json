@@ -13,9 +13,7 @@
     "moduleResolution": "node",
     "types": ["node"]
   },
-  "include": [
-    "**/*.ts"
-, "src/DB/models/user/user.hoos"  ],
+  "include": ["**/*.ts"],
   "exclude": [
     "node_modules",
     "dist"

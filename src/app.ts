@@ -14,6 +14,8 @@ const entryPoint = (app: Application, express: any) => {
   const baseUrl = "/api/v1";
   app.use(express.json());
 
+  // auth routes
+  app.use(`${baseUrl}/auth`, routers.authRouter)
   // User routes
   app.use(`${baseUrl}/users`, routers.userRouter);
 

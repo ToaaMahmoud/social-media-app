@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { IPostDocument } from "../../interfaces/db-interfaces/post.db.interface";
+import { IPostDocument } from "../../../interfaces/db-interfaces/post.db.interface";
 
 const postSchema = new Schema<IPostDocument>(
   {
@@ -21,7 +21,7 @@ const postSchema = new Schema<IPostDocument>(
     },
     createdAt: {
       type: Date,
-      degfault: Date.now,
+      default: Date.now,
     },
     updatedAt: {
       type: Date,

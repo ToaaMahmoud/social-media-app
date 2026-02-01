@@ -29,6 +29,7 @@ const userSchema = new Schema<IUserDocument>(
   },
   { timestamps: true },
 );
+
 userSchema.pre<IUserDocument>("save", async function () {
   if (!this.isModified("password")) return;
   this.password = await hashPassword({password: this.password});

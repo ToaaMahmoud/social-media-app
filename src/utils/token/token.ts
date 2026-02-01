@@ -5,13 +5,13 @@ import {
   UserRoles,
 } from "../../interfaces/db-interfaces/user.db.interface";
 
-const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET || JWT_SECRET.length < 32) {
-  throw new AppError(
-    "ERROR: JWT_SECRET must be defined in .env and at least 32 characters long",
-    500,
-  );
-}
+const getJwtSecret = (): string => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret || secret.length < 32) {
+    throw new AppError("ERROR: JWT_SECRET must be defined in .env and at least 32 characters long", 500);
+  }
+  return secret;
+};
 
 export interface TokenPayload {
   id: string;
@@ -26,7 +26,7 @@ export const generateToken = ({
   payload,
   options = { expiresIn: "1h" },
 }: GenerateTokenParams): string => {
-  return jwt.sign(payload, JWT_SECRET, options);
+  return jwt.sign(payload, getJwtSecret(), options);
 };
 
 export const verifyToken = (token: string): TokenPayload => {
@@ -35,7 +35,7 @@ export const verifyToken = (token: string): TokenPayload => {
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as TokenPayload;
+    const decoded = jwt.verify(token, getJwtSecret()) as TokenPayload;
 
     if (!decoded.id || !decoded.role) {
       throw new AppError("Invalid token payload", 401);
